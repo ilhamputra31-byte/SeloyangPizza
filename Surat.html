@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat untuk Khaira</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --pink1:#FF6B9D;
+  --pink2:#FF8FB5;
+  --pink3:#FFB3CC;
+  --pink4:#FFD6E5;
+  --pink5:#FFF0F5;
+  --rose:#E91E63;
+  --rose-dark:#C2185B;
+  --text:#2D0A1A;
+  --text-mid:#7A3050;
+  --text-light:#B06080;
+}
+
+html,body{
+  height:100%;
+  overflow:hidden;
+  font-family:'Nunito',sans-serif;
+  color:var(--text);
+}
+
+body{
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FB5 20%, #FFB3CC 40%, #E91E63 60%, #FF6B9D 80%, #C2185B 100%);
+  background-size: 400% 400%;
+  animation: bgShift 12s ease infinite;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+@keyframes bgShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 30%, rgba(255,255,255,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 80% 70%, rgba(255,0,128,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 500px at 60% 10%, rgba(255,255,255,0.12) 0%, transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+
+#scene{
+  position:relative;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100vw;
+  height:100vh;
+}
+
+.envelope-wrap{
+  position:relative;
+  cursor:pointer;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  filter: drop-shadow(0 24px 48px rgba(185,0,80,0.35));
+}
+.envelope-wrap:hover{
+  transform: translateY(-8px) scale(1.04);
+}
+.envelope-wrap:hover .env-flap{
+  transform: rotateX(30deg);
+}
+
+.envelope{
+  width: 320px;
+  height: 220px;
+  position:relative;
+}
+
+.env-body{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(160deg, #fff5f8 0%, #ffd6e5 60%, #ffb3cc 100%);
+  border-radius: 12px 12px 16px 16px;
+  border: 2.5px solid rgba(255,255,255,0.9);
+  overflow:hidden;
+}
+
+.env-body::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(255,182,193,0.4) 0%, transparent 50%);
+}
+
+.env-fold-left{
+  position:absolute;
+  bottom:0; left:0;
+  width:0; height:0;
+  border-style:solid;
+  border-width: 110px 0 0 160px;
+  border-color: transparent transparent transparent rgba(255,143,181,0.35);
+}
+.env-fold-right{
+  position:absolute;
+  bottom:0; right:0;
+  width:0; height:0;
+  border-style:solid;
+  border-width: 110px 160px 0 0;
+  border-color: transparent rgba(255,143,181,0.35) transparent transparent;
+}
+
+.env-flap{
+  position:absolute;
+  top:0; left:0; right:0;
+  height:0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 120px solid #ffb3cc;
+  transform-origin: top center;
+  transition: transform 0.4s ease;
+  z-index:2;
+  filter: drop-shadow(0 4px 8px rgba(185,0,80,0.2));
+}
+.env-flap::after{
+  content:'';
+  position:absolute;
+  top:-120px; left:-160px; right:-160px;
+  height:120px;
+  background: linear-gradient(160deg, #ffd6e5 0%, #ffb3cc 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  z-index:3;
+}
+
+.env-seal{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  z-index:5;
+  font-size:28px;
+  animation: heartBeat 1.8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes heartBeat{
+  0%,100%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.15);}
+}
+
+.env-hint{
+  position:absolute;
+  bottom:-36px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Quicksand',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:rgba(255,255,255,0.85);
+  white-space:nowrap;
+  letter-spacing:0.5px;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse{
+  0%,100%{opacity:0.7;}
+  50%{opacity:1;}
+}
+
+#overlay{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(200,30,80,0.18);
+  backdrop-filter:blur(6px);
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 0.4s ease;
+}
+#overlay.open{
+  opacity:1;
+  pointer-events:all;
+}
+
+.paper-wrap{
+  position:relative;
+  transform: scale(0.85) translateY(40px);
+  transition: transform 0.45s cubic-bezier(.34,1.56,.64,1);
+}
+#overlay.open .paper-wrap{
+  transform: scale(1) translateY(0);
+}
+
+.paper{
+  width: min(520px, calc(100vw - 40px));
+  max-height: calc(100vh - 80px);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 31px,
+      rgba(255,143,181,0.25) 31px,
+      rgba(255,143,181,0.25) 32px
+    ),
+    linear-gradient(160deg, #fffdf5 0%, #fff8f0 40%, #fff5f5 80%, #fef0f5 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 0 #e8c8b0,
+    0 8px 0 rgba(0,0,0,0.08),
+    0 20px 60px rgba(185,0,80,0.22),
+    inset 0 0 30px rgba(255,200,180,0.1);
+  border: 1px solid rgba(220,180,150,0.5);
+  overflow:hidden;
+  position:relative;
+}
+
+.paper::before{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;
+  left:56px;
+  width:2px;
+  background:rgba(255,100,130,0.3);
+  z-index:1;
+}
+
+.paper::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,
+    transparent 0%, rgba(220,180,150,0.4) 10%,
+    transparent 20%, rgba(220,180,150,0.4) 35%,
+    transparent 50%, rgba(220,180,150,0.4) 65%,
+    transparent 75%, rgba(220,180,150,0.4) 90%, transparent 100%);
+}
+
+.paper-inner{
+  padding: 28px 32px 32px 68px;
+  overflow-y:auto;
+  max-height: calc(100vh - 80px);
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,143,181,0.4) transparent;
+}
+.paper-inner::-webkit-scrollbar{width:4px;}
+.paper-inner::-webkit-scrollbar-thumb{background:rgba(255,143,181,0.4);border-radius:2px;}
+
+.stamp{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:52px; height:52px;
+  border: 3px dotted rgba(255,100,130,0.5);
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  color:rgba(255,100,130,0.55);
+  z-index:2;
+}
+
+.page{
+  display:none;
+}
+.page.active{
+  display:block;
+}
+
+.letter-salutation{
+  font-family:'Baloo 2',cursive;
+  font-size:18px;
+  font-weight:600;
+  color:var(--rose);
+  margin-bottom:12px;
+}
+
+.letter-body{
+  font-family:'Quicksand',sans-serif;
+  font-size:15px;
+  font-weight:500;
+  color:#3a1420;
+  line-height:2.0;
+}
+
+.letter-body p{
+  margin-bottom:16px;
+}
+
+.story-box{
+  background: linear-gradient(135deg, rgba(255,240,245,0.8), rgba(255,220,235,0.5));
+  border-left: 3px solid var(--pink2);
+  border-radius:0 8px 8px 0;
+  padding:14px 16px;
+  margin:14px 0;
+  font-style:italic;
+  font-size:14px;
+  line-height:1.9;
+  color:#5a2035;
+}
+
+.page-indicator{
+  font-family:'Quicksand',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  color:var(--text-light);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  text-align:center;
+  margin-bottom:18px;
+  opacity:0.6;
+}
+
+.paper-nav{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:24px;
+  padding-top:12px;
+  border-top:1px dashed rgba(255,143,181,0.35);
+}
+
+.btn-next, .btn-end{
+  font-family:'Baloo 2',cursive;
+  font-size:15px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 22px;
+  border-radius:50px;
+  border:none;
+  cursor:pointer;
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-next{
+  background:linear-gradient(135deg, var(--pink2), var(--rose));
+  color:white;
+  box-shadow: 0 4px 16px rgba(233,30,99,0.35);
+}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,0.4);}
+.btn-next:active{transform:translateY(0);}
+
+.btn-end{
+  background:linear-gradient(135deg,#ff9ebc,var(--pink1));
+  color:white;
+  box-shadow: 0 4px 16px rgba(233,30,99,0.3);
+}
+.btn-end:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,0.38);}
+.btn-end:active{transform:translateY(0);}
+
+.petal{
+  position:fixed;
+  pointer-events:none;
+  z-index:5;
+  font-size:20px;
+  animation:fallDown linear forwards;
+  opacity:0;
+}
+@keyframes fallDown{
+  0%{transform:translateY(-30px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+.btn-close{
+  position:absolute;
+  top:-14px; right:-14px;
+  width:32px; height:32px;
+  border-radius:50%;
+  background:white;
+  border:2px solid var(--pink2);
+  cursor:pointer;
+  font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(185,0,80,0.2);
+  transition:transform 0.15s;
+  z-index:10;
+  color:var(--rose);
+  line-height:1;
+}
+.btn-close:hover{transform:scale(1.15) rotate(15deg);}
+
+</style>
+</head>
+<body>
+
+<div id="scene">
+  <div class="envelope-wrap" onclick="openLetter()" title="Klik untuk membuka surat!">
+    <div class="envelope">
+      <div class="env-body">
+        <div class="env-fold-left"></div>
+        <div class="env-fold-right"></div>
+      </div>
+      <div class="env-flap"></div>
+
+    </div>
+    <div class="env-hint">&#10022; klik untuk membuka &#10022;</div>
+  </div>
+</div>
+
+<div id="overlay">
+  <div class="paper-wrap">
+    <button class="btn-close" onclick="closeLetter()" title="Tutup">&#x2715;</button>
+    <div class="paper">
+      <div class="stamp">&#9993;</div>
+      <div class="paper-inner">
+
+        <!-- PAGE 1 -->
+        <div class="page active" id="page-1">
+          <div class="page-indicator">halaman 1 dari 3</div>
+          <div class="letter-salutation">Heii Khaira,</div>
+          <div class="letter-body">
+            <p>kamu apa kabar? kayaknya aku ga mau berlama lama lagi deh, aku mau coba straight to the point.</p>
+            <p>Aku ngerasa 2 bulan ini ada yang beda aja sih dari kita, kayak yang aku pernah bilang, aku suka chattingan sama kamu.</p>
+            <p>Kamu tu sebenernya kayak nge-unlock hal baru di diri aku tau, aku gatau ternyata aku bisa bersikap gini haha.</p>
+            <p>Aku pun sejujurnya seakan nangkep hint hint dari kamu, tapi entah kenapa belakangan ini hint itu mulai pudar, jadi aku pengen tau aja sih sebenernya hint itu beneran ada atau aku sebatas <strong>mercusuar yang menangkap cahaya fana di tengah luasnya ombak samudra</strong>.</p>
+          </div>
+          <div class="paper-nav">
+            <button class="btn-next" onclick="goPage(2)">lanjut &rarr;</button>
+          </div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="page" id="page-2">
+          <div class="page-indicator">halaman 2 dari 3</div>
+          <div class="letter-salutation">Kamu mau tau cerita dari buku yang aku baca?</div>
+          <div class="letter-body">
+            <div class="story-box">
+              <p>Pada sebuah kota di St. Petersburg hidulah seorang pria penyendiri. Pria itu bagaikan paprika yang hanya menjadi topping pelengkap seloyang pizza, sebatas pelengkap. Pada suatu malam, pria penyendiri itu bertemu wanita yang tidak pernah dia mimpikan sebelumnya, Nastenka. Pertemuan pertamanya pada malam itu membuat sang pria akhirnya memiliki semangat lagi, ia sadar bahwa ia bukan sebatas paprika. Malam selanjutnya, Natsenka bercerita bahwa sebenarnya dia jatuh cinta dengan pria lain yang sedang pergi ke luar kota untuk urusan bisnis dan berjanji akan kembali dalam waktu satu tahun. Natsenka bersedih karena ternyata pria itu tidak pernah kembali, pria penyendiri itu pun berusaha menghibur dan menyatakan perasaannya kepada Natsenka, pria itu berterima kasih karena Natsenka sudah memberikan semangatnya kembali, Natsenka yang mendengar itu mulai membalas perasaannya dalam keadaan ragu. Malam terakhir, Natsenka dan penyendiri itu mulai merencanakan masa depan mereka bersama. Akan tetapi, ibarat debur ombak yang menghempas batuan karang, secara tiba-tiba pria yang ditunggu kehadirannya oleh Natsenka kembali. Natsenka berlari memeluk pria itu dan pergi meninggalkan pria pennyendiri itu. Sang penyendiri akhirnya kembali menyadari bahwa memang dari awal hidupnya hanya sebatas paprika.</p>
+            </div>
+          </div>
+          <div class="paper-nav">
+            <button class="btn-next" onclick="goPage(3)">lanjut &rarr;</button>
+          </div>
+        </div>
+
+        <!-- PAGE 3 -->
+        <div class="page" id="page-3">
+          <div class="page-indicator">halaman 3 dari 3</div>
+          <div class="letter-salutation">Khaira,</div>
+          <div class="letter-body">
+            <p>aku harap aku bukan penyendiri itu, aku harap aku bukan sebuah paprika pada sebuah loyang pizza. I hope we can literally go to some place together someday! Mungkin level kita bisa naik dari <strong>0,501</strong> hingga entah berapapun itu, tapi jangan terburu buru yahh ibarat makan pizza ajaa.</p>
+            <p>Btw, semoga skill menulisku masih bagus yah hahaha, <strong>Thankyouu!</strong> Semoga hari hari kamu selalu happy.</p>
+          </div>
+          <div class="paper-nav">
+            <button class="btn-end" onclick="closeLetter()">selesai &#10022;</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentPage = 1;
+
+function openLetter(){
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('open');
+  currentPage = 1;
+  showPage(1);
+  spawnPetals();
+}
+
+function closeLetter(){
+  const overlay = document.getElementById('overlay');
+  overlay.classList.remove('open');
+  setTimeout(()=>{
+    document.querySelector('.paper-inner').scrollTop = 0;
+    showPage(1);
+  }, 450);
+}
+
+function goPage(n){
+  currentPage = n;
+  showPage(n);
+  document.querySelector('.paper-inner').scrollTop = 0;
+}
+
+function showPage(n){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const p = document.getElementById('page-' + n);
+  if(p) p.classList.add('active');
+}
+
+function spawnPetals(){
+  const chars = ['\u2665','\u2764','\u2661','\u2727','\u2726','\u273f','\u2740'];
+  for(let i=0;i<12;i++){
+    setTimeout(()=>{
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.textContent = chars[Math.floor(Math.random()*chars.length)];
+      el.style.left = Math.random()*100 + 'vw';
+      el.style.animationDuration = (2.5 + Math.random()*2) + 's';
+      el.style.animationDelay = '0s';
+      el.style.fontSize = (14 + Math.random()*14) + 'px';
+      el.style.color = ['#FF6B9D','#E91E63','#FF8FB5','#C2185B','#FFB3CC'][Math.floor(Math.random()*5)];
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 5000);
+    }, i * 120);
+  }
+}
+
+document.getElementById('overlay').addEventListener('click', function(e){
+  if(e.target === this) closeLetter();
+});
+</script>
+</body>
+</html>
